@@ -71,7 +71,7 @@
                     </Image.Source>
                 </Image>
 
-                <TextBlock Text="{x:Bind ViewModel.Item.Title}" Style="{ThemeResource HeaderTextBlockStyle}" 
+                <TextBlock Text="{x:Bind ViewModel.Item.Title}" Style="{ThemeResource TitleTextBlockStyle}" FontWeight="SemiBold"
                                 TextWrapping="WrapWholeWords" Margin="0,0,0,10"/>
                 <TextBlock Text="{x:Bind ViewModel.Item.Date}" Style="{ThemeResource BaseTextBlockStyle}"
                                 Foreground="Gray" Margin="0,0,0,10"/>

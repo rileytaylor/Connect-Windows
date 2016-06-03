@@ -157,7 +157,7 @@ namespace BernieApp.UWP.ViewModels
                                 max-width: {3} !important;
                             }}
                         </style>
-                    </head><body><div id=""content"" onload=""h()"">{2}</div></body>
+                    </head><body>{2}</body>
                 </html>", "100%", "100%", removeNewline, "100%");
             if (htmlPage.Contains("//platform.twitter.com/widgets.js"))
             {

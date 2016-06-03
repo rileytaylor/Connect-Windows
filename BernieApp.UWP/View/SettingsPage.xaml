@@ -91,62 +91,56 @@
 
             <!--  about  -->
             <PivotItem Header="About">
-                <RelativePanel>
+                <ScrollViewer VerticalScrollBarVisibility="Hidden" VerticalScrollMode="Enabled">
+                    <RelativePanel>
+                        <Border x:Name="LogoImage" HorizontalAlignment="Center"
+                                VerticalAlignment="Top" Margin="10,0,0,0" BorderBrush="DimGray"
+                                BorderThickness="1" IsHitTestVisible="False"
+                                RelativePanel.AlignHorizontalCenterWithPanel="True"
+                                RelativePanel.AlignTopWithPanel="True">
+                            <Border.Background>
+                                <SolidColorBrush Color="#FF147FD7" />
+                            </Border.Background>
+                            <Image Margin="12" Source="{Binding Logo}"
+                                   Stretch="None" />
+                        </Border>
+                        <TextBlock x:Name="AboutTextBlock"
+                                   RelativePanel.AlignLeftWithPanel="True"
+                                   RelativePanel.Below="LogoImage"
+                                   TextWrapping="WrapWholeWords"
+                                   Text="This app is built by a small group of volunteers working with the Bernie 2016 campgain. The purpose of this app is to help raise awareness of Bernie, his work, and the growing political movement. WHen registering for an event, you will be registring into the berniesanders.com events page. If you would like to contribute towards this project, check out the buttons below:"/>
+                        <Button x:Name="SlackButton" Margin="10" Command="{Binding Path=SlackButtonCommand}"
+                                RelativePanel.Below="AboutTextBlock"
+                                RelativePanel.AlignHorizontalCenterWithPanel="True">
+                            <Button.Content>
+                                <TextBlock Text="Talk to us on Slack"/>
+                            </Button.Content>
+                        </Button>
+                        <Button x:Name="GitHubButton" Margin="10" Command="{Binding Path=GithubButtonCommand}"
+                                RelativePanel.Below="SlackButton"
+                                RelativePanel.AlignHorizontalCenterWithPanel="True">
+                            <Button.Content>
+                                <TextBlock Text="View code on GitHub"/>
+                            </Button.Content>
+                        </Button>
+                        <TextBlock x:Name="DisplayNameTextBlock" Margin="0,0,0,12"
+                                   FontSize="24" RelativePanel.AlignLeftWithPanel="True"
+                                   RelativePanel.AlignRightWith="LogoImage"
+                                   RelativePanel.Below="GitHubButton"
+                                   Text="{Binding DisplayName}" />
+                        <TextBlock x:Name="PublisherTextBlock"
+                                   RelativePanel.AlignLeftWithPanel="True"
+                                   RelativePanel.Below="DisplayNameTextBlock"
+                                   Text="{Binding Publisher}" />
+                        <TextBlock x:Name="VersionTextBlock"
+                                   RelativePanel.AlignLeftWithPanel="True"
+                                   RelativePanel.Below="PublisherTextBlock">
+                            <Run>Version:</Run>
+                            <Run Text="{Binding Version}" />
+                        </TextBlock>
 
-                    <Border x:Name="LogoImage" HorizontalAlignment="Center"
-                            VerticalAlignment="Top" BorderBrush="DimGray"
-                            BorderThickness="1" IsHitTestVisible="False"
-                            RelativePanel.AlignHorizontalCenterWithPanel="True"
-                            RelativePanel.AlignTopWithPanel="True">
-                        <Border.Background>
-                            <SolidColorBrush Color="{ThemeResource SystemAccentColor}" />
-                        </Border.Background>
-                        <Image Margin="12" Source="{Binding Logo}"
-                               Stretch="None" />
-                    </Border>
-
-                    <TextBlock x:Name="AboutTextBlock"
-                               RelativePanel.AlignLeftWithPanel="True"
-                               RelativePanel.Below="LogoImage"
-                               TextWrapping="WrapWholeWords"
-                               Text="This app is built by a small group of volunteers working with the Bernie 2016 campgain. The purpose of this app is to help raise awareness of Bernie, his work, and the growing political movement. WHen registering for an event, you will be registring into the berniesanders.com events page. If you would like to contribute towards this project, check out the buttons below:"/>
-
-                    <Button x:Name="SlackButton" Margin="10" Command="{Binding Path=SlackButtonCommand}"
-                            RelativePanel.Below="AboutTextBlock"
-                            RelativePanel.AlignHorizontalCenterWithPanel="True">
-                        <Button.Content>
-                            <TextBlock Text="Talk to us on Slack"/>
-                        </Button.Content>
-                        
-                    </Button>
-
-                    <Button x:Name="GitHubButton" Margin="10" Command="{Binding Path=GithubButtonCommand}"
-                            RelativePanel.Below="SlackButton"
-                            RelativePanel.AlignHorizontalCenterWithPanel="True">
-                        <Button.Content>
-                            <TextBlock Text="View code on GitHub"/>
-                        </Button.Content>
-                    </Button>
-
-                    <TextBlock x:Name="DisplayNameTextBlock" Margin="0,0,0,12"
-                               FontSize="24" RelativePanel.AlignLeftWithPanel="True"
-                               RelativePanel.AlignRightWith="LogoImage"
-                               RelativePanel.Below="GitHubButton"
-                               Text="{Binding DisplayName}" />
-
-                    <TextBlock x:Name="PublisherTextBlock"
-                               RelativePanel.AlignLeftWithPanel="True"
-                               RelativePanel.Below="DisplayNameTextBlock"
-                               Text="{Binding Publisher}" />
-
-                    <TextBlock x:Name="VersionTextBlock"
-                               RelativePanel.AlignLeftWithPanel="True"
-                               RelativePanel.Below="PublisherTextBlock">
-                        <Run>Version:</Run>
-                        <Run Text="{Binding Version}" />
-                    </TextBlock>
-
-                </RelativePanel>
+                    </RelativePanel>
+                </ScrollViewer>
             </PivotItem>
 
             <!--  open source  -->

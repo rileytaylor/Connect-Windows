@@ -10,29 +10,33 @@
 >
 
     <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" SizeChanged="Grid_SizeChanged">
-
-        <ScrollViewer HorizontalAlignment="Center" VerticalAlignment="Top" 
+        <ScrollViewer HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
                     VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Disabled"
                     VerticalScrollMode="Enabled" HorizontalScrollMode="Disabled"
                     x:Name="scrollViewer">
-            <RelativePanel>
-                <TextBlock Grid.Row="0" x:Name="titleBox"
-                        RelativePanel.AlignHorizontalCenterWithPanel="True"
-                        HorizontalAlignment="Center"  Margin="10"
-                        Text="{Binding Title}" Style="{ThemeResource SubtitleTextBlockStyle}" TextAlignment="Center" FontWeight="SemiBold"/>
-                <TextBlock Grid.Row="1" x:Name="descriptionBox"
-                        RelativePanel.Below="titleBox" RelativePanel.AlignHorizontalCenterWithPanel="True"
-                        HorizontalAlignment="Center"  MaxWidth="600" Margin="10"
-                        Text="{Binding ShortDescription}" Style="{ThemeResource BaseTextBlockStyle}"/>
-                <WebView VerticalAlignment ="Top" HorizontalAlignment="Center" MaxWidth="500" x:Name="webView" DefaultBackgroundColor="Transparent"
-                        RelativePanel.Below="descriptionBox" RelativePanel.AlignHorizontalCenterWithPanel="True"
-                        NavigationCompleted="webView_NavigationCompleted" PermissionRequested="webView_PermissionRequested" ScriptNotify="WebView_ScriptNotify"
-                        UnsafeContentWarningDisplaying="webView_UnsafeContentWarningDisplaying" UnviewableContentIdentified="webView_UnviewableContentIdentified"/>
-            </RelativePanel>
-        </ScrollViewer>
-        
-        <ProgressRing Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center" x:Name="ProgressRing" Foreground="#FF147FD7" 
-                      IsActive="True" Width="100" Height="100"/>
-    </Grid>
+            <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
 
+                <TextBlock Grid.Row="0" x:Name="titleBox"
+                    HorizontalAlignment="Center"  Margin="10"
+                    Text="{Binding Title}" Style="{ThemeResource SubtitleTextBlockStyle}" TextAlignment="Center" FontWeight="SemiBold"/>
+                <TextBlock Grid.Row="1" x:Name="descriptionBox"
+                    HorizontalAlignment="Center"  MaxWidth="600" Margin="10"
+                    Text="{Binding ShortDescription}" Style="{ThemeResource BaseTextBlockStyle}"/>
+                <WebView Grid.Row="2" VerticalAlignment ="Top" HorizontalAlignment="Center" MaxWidth="500" x:Name="webView" DefaultBackgroundColor="Transparent"
+                    NavigationCompleted="webView_NavigationCompleted" PermissionRequested="webView_PermissionRequested"
+                    UnsafeContentWarningDisplaying="webView_UnsafeContentWarningDisplaying" UnviewableContentIdentified="webView_UnviewableContentIdentified"/>
+                <Rectangle Grid.Row="2" x:Name="scrollRectangle"  VerticalAlignment="Top" HorizontalAlignment="Center" MaxWidth="500" Fill ="#00000000"
+                        Height="{Binding Height, ElementName=webView}" Width="{Binding Width, ElementName=webView}"
+                        Tapped="scrollRectangle_Tapped"/>
+                <ProgressRing Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center" x:Name="ProgressRing" Foreground="#FF147FD7" 
+                    IsActive="True" Width="100" Height="100"/>
+            </Grid>
+        </ScrollViewer>
+    </Grid>
+    
 </UserControl>

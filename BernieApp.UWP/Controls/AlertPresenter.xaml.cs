@@ -10,6 +10,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 using Windows.System.Profile;
+using Windows.System;
 
 // The User Control item template is documented at http://go.microsoft.com/fwlink/?LinkId=234236
 
@@ -32,25 +33,29 @@ namespace BernieApp.UWP.Controls
         {
             this.InitializeComponent();
 
+            DetectMobileDevice();
+
             Messenger.Default.Register<AlertMessage>(this, (message) =>
             {
                 if (message.Id == Alert.Id && !string.IsNullOrEmpty(message.Path))
                 {
                     Uri url = webView.BuildLocalStreamUri("Alert", message.Path);
                     StreamUriResolver resolver = new StreamUriResolver();
-                    //Edge Mobile doesn't render fb-video posts, so must fake browser as IE11 for those posts on mobile devices
-                    if (Alert.BodyHTML.Contains("fb-video") && (AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Mobile"))
-                    {
-                        HttpRequestMessage httpRequestMessage = new HttpRequestMessage(
-                            HttpMethod.Post, url);
-                        var add = "Mozilla/5.0 (Windows NT 10.0; WOW64; Trident/7.0; rv:11.0) like Gecko";
-                        httpRequestMessage.Headers.Add("User-Agent", add);
-                        webView.NavigateWithHttpRequestMessage(httpRequestMessage);
-                    }
-                    else
-                    {
-                        webView.NavigateToLocalStreamUri(url, resolver);
-                    }
+                    ////Edge Mobile doesn't render fb-video posts, so must fake browser as IE11 for those posts on mobile devices
+                    //if (Alert.BodyHTML.Contains("fb-video") && (AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Mobile"))
+                    //{
+                    //    HttpRequestMessage httpRequestMessage = new HttpRequestMessage(
+                    //        HttpMethod.Post, url);
+                    //    var add = "Mozilla/5.0 (Windows NT 10.0; WOW64; Trident/7.0; rv:11.0) like Gecko";
+                    //    httpRequestMessage.Headers.Add("User-Agent", add);
+                    //    webView.NavigateWithHttpRequestMessage(httpRequestMessage);
+                    //}
+                    //else
+                    //{
+                    //    webView.NavigateToLocalStreamUri(url, resolver);
+                    //}
+                    webView.NavigateToLocalStreamUri(url, resolver);
+
                     Debug.WriteLine(Windows.Storage.ApplicationData.Current.TemporaryFolder.Path + "\\" + message.Path);
                 }
             });
@@ -87,27 +92,6 @@ namespace BernieApp.UWP.Controls
             webView.Visibility = Visibility.Visible;
         }
 
-        private void WebView_ScriptNotify(object sender, NotifyEventArgs args)
-        {
-            switch (args.Value)
-            {
-                case "left":
-                    Debug.WriteLine("web view swipe left");
-                    break;
-                case "right":
-                    Debug.WriteLine("web view swipe right");
-                    break;
-                case "up":
-                    Debug.WriteLine("web view swipe up");
-                    break;
-                case "down":
-                    Debug.WriteLine("web view swipe down");
-                    break;
-                default:
-                    break;
-            }
-        }
-
         private void Grid_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             webView.Width = e.NewSize.Width;
@@ -128,6 +112,25 @@ namespace BernieApp.UWP.Controls
         {
             Debug.WriteLine(args.Uri.ToString());
             //Display error message?
+        }
+
+        private void DetectMobileDevice()
+        {
+            if ((AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Mobile"))
+            {
+                scrollRectangle.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                scrollRectangle.Visibility = Visibility.Collapsed;
+            }
+        }
+
+        private async void scrollRectangle_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            var url = Alert.TargetUrl;
+            if (url == null) { url = Alert.TwitterUrl; }
+            await Launcher.LaunchUriAsync(new Uri(url));
         }
     }
 }
